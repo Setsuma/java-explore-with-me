@@ -2,7 +2,6 @@ package ru.practicum.hit.server.endpointhit.service;
 
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.JpaSort;
 import org.springframework.stereotype.Service;
 import ru.practicum.hit.dto.EndpointHitDto;
@@ -27,12 +26,13 @@ public class EndpointHitService {
 
     public List<ViewStatsDto> getStats(LocalDateTime start, LocalDateTime end, List<String> uris, Boolean unique) {
         List<ViewStatsDto> viewStats;
-        Sort sort = JpaSort.unsafe("COUNT(DISTINCT hits.ip)").descending();
 
         if (unique == Boolean.TRUE) {
-            viewStats = endpointHitRepository.collectUniqueEndpointStats(start, end, uris, sort);
+            viewStats = endpointHitRepository.collectUniqueEndpointStats(start, end, uris,
+                    JpaSort.unsafe("COUNT(DISTINCT hits.ip)").descending());
         } else {
-            viewStats = endpointHitRepository.collectEndpointHitStats(start, end, uris, sort);
+            viewStats = endpointHitRepository.collectEndpointHitStats(start, end, uris,
+                    JpaSort.unsafe("COUNT(hits.ip)").descending());
         }
 
         return viewStats;
