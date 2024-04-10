@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ru.practicum.ewm.entity.event.service.statistics.EventStatisticsService;
-
 import ru.practicum.hit.client.StatClient;
 import ru.practicum.hit.dto.EndpointHitDto;
 import ru.practicum.hit.dto.ViewStatsDto;

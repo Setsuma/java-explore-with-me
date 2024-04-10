@@ -11,7 +11,7 @@ import ru.practicum.ewm.entity.user.entity.User;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import static com.fasterxml.jackson.annotation.JsonInclude.*;
+import static com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 @JsonInclude(Include.NON_NULL)
 @Getter
