@@ -21,9 +21,7 @@ public class CategoryAdminController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public CategoryResponseDto addCategory(
-            @RequestBody @Valid AddCategoryRequestDto categoryDto
-    ) {
+    public CategoryResponseDto addCategory(@RequestBody @Valid AddCategoryRequestDto categoryDto) {
         CategoryControllerLoggerHelper.addCategory(log, categoryDto);
         return categoryAdminService.addCategory(categoryDto);
     }
