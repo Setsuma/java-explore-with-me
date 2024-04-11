@@ -25,9 +25,7 @@ public class UserAdminController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public UserResponseDto addUser(
-            @RequestBody @Valid AddUserRequestDto userDto
-    ) {
+    public UserResponseDto addUser(@RequestBody @Valid AddUserRequestDto userDto) {
         UserControllerLoggerHelper.addUser(log, userDto);
         return userAdminService.addUser(userDto);
     }
