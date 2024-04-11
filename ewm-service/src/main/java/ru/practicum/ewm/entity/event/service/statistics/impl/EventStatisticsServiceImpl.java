@@ -1,5 +1,6 @@
 package ru.practicum.ewm.entity.event.service.statistics.impl;
 
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -14,9 +15,9 @@ import java.util.List;
 
 @Service
 @Slf4j
-@RequiredArgsConstructor
+@NoArgsConstructor
 public class EventStatisticsServiceImpl implements EventStatisticsService {
-    private final StatClient endpointHitClient;
+    private final StatClient endpointHitClient = new StatClient("http://localhost:9090");
 
     @Override
     public void addEventView(HttpServletRequest request, LocalDateTime timestamp) {
