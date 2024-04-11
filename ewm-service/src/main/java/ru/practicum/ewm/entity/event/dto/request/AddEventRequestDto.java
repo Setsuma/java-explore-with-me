@@ -3,10 +3,9 @@ package ru.practicum.ewm.entity.event.dto.request;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.boot.context.properties.bind.DefaultValue;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 import java.time.LocalDateTime;
 
 @Getter
@@ -31,7 +30,8 @@ public class AddEventRequestDto {
     private Location location;
 
     private Boolean paid;
-    private Integer participantLimit;
+    @PositiveOrZero
+    private Integer participantLimit = 0;
     private Boolean requestModeration;
 
     @NotBlank
