@@ -81,7 +81,7 @@ public class ParticipationPrivateServiceImpl implements ParticipationPrivateServ
             throw new ConflictException("Request already exists");
         }
 
-        if (event.getRequestModeration() == Boolean.FALSE) {
+        if (event.getRequestModeration() == Boolean.FALSE || event.getParticipantLimit() == 0) {
             request.setStatus(Participation.Status.CONFIRMED);
         }
 
