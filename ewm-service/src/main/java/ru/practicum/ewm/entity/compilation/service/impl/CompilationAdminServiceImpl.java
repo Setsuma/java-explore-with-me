@@ -61,7 +61,7 @@ public class CompilationAdminServiceImpl implements CompilationAdminService {
         Optional.ofNullable(compilationDto.getTitle()).ifPresent(compilation::setTitle);
         Optional.ofNullable(compilationDto.getPinned()).ifPresent(compilation::setPinned);
 
-        if (compilationDto.getEvents() != null) {
+        if (compilationDto.getEvents() != null && !compilationDto.getEvents().isEmpty()) {
             Set<Event> existsEvents = new HashSet<>(eventRepository.findAllById(compilationDto.getEvents()));
             compilation.setEvents(existsEvents);
         }

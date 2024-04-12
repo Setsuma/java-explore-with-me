@@ -5,13 +5,14 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.validation.constraints.Size;
+import java.util.Collections;
 import java.util.Set;
 
 @Getter
 @Setter
 @NoArgsConstructor
 public class UpdateCompilationRequestDto {
-    private Set<Long> events;
+    private Set<Long> events = Collections.emptySet();
 
     private Boolean pinned;
 
