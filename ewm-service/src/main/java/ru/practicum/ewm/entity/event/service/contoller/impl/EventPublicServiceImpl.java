@@ -44,7 +44,7 @@ public class EventPublicServiceImpl implements EventPublicService {
     public EventFullResponseDto getEventById(Long id, HttpServletRequest request) {
         eventRepository.checkEventExistsById(id);
         Event event = eventRepository.getReferenceById(id);
-        if (event.getState() != Event.State.PUBLISHED){
+        if (event.getState() != Event.State.PUBLISHED) {
             throw EventNotFoundException.fromEventId(id);
         }
         eventStatisticsService.addEventView(request, LocalDateTime.now());
