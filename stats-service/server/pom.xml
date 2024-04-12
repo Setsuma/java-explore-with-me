@@ -56,6 +56,24 @@
             <artifactId>modelmapper-spring-boot-starter</artifactId>
             <version>2.3.1</version>
         </dependency>
+        <dependency>
+            <groupId>ru.practicum</groupId>
+            <artifactId>ewm-service</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>ru.practicum</groupId>
+            <artifactId>ewm-service</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>ru.practicum</groupId>
+            <artifactId>ewm-service</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
 
     <build>

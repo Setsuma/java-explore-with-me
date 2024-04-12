@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import ru.practicum.ewm.exception.ValEx;
 import ru.practicum.hit.dto.EndpointHitDto;
 import ru.practicum.hit.dto.ViewStatsDto;
 import ru.practicum.hit.server.endpointhit.service.EndpointHitService;
@@ -29,6 +30,8 @@ public class EndpointHitController {
             @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime end,
             @RequestParam(defaultValue = "") List<String> uris,
             @RequestParam(defaultValue = "false") Boolean unique) {
+
+        if (start != null && end != null && start.isAfter(end)) throw new ValEx("date error");
 
         List<String> uri = null;
         for (String u : uris) if (!u.isBlank()) uri = uris;
