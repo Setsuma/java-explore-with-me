@@ -19,6 +19,6 @@ public class AddCompilationRequestDto {
     private Boolean pinned;
 
     @NotBlank
-    @Size(min = 3, max = 120)
+    @Size(min = 1, max = 50)
     private String title;
 }

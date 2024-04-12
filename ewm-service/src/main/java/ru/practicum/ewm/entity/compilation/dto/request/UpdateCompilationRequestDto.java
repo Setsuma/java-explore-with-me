@@ -17,6 +17,6 @@ public class UpdateCompilationRequestDto {
 
     private Boolean pinned;
 
-    @Size(min = 3, max = 120)
+    @Size(min = 1, max = 50)
     private String title;
 }
