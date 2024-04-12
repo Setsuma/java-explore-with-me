@@ -165,7 +165,7 @@ public class EventPublicServiceImpl implements EventPublicService {
                 eventStatisticsService.getEventViews(
                         LocalDateTime.from(event.getEventDate()).minusYears(1L),
                         LocalDateTime.from(event.getEventDate()),
-                        null,
+                        true,
                         request),
                 requestRepository.getEventRequestsCount(
                         event.getId(),

@@ -12,7 +12,6 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 public class UpdateCompilationRequestDto {
-    @NotNull
     private Set<Long> events;
 
     private Boolean pinned;
