@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import ru.practicum.ewm.entity.event.entity.Event;
 
+import javax.validation.constraints.Future;
 import javax.validation.constraints.PositiveOrZero;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
@@ -21,6 +22,7 @@ public class UpdateEventAdminRequestDto {
     @Size(min = 20, max = 7_000)
     private String description;
 
+    @Future
     private LocalDateTime eventDate;
     private Location location;
     private Boolean paid;
