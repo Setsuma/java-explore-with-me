@@ -25,11 +25,12 @@ public final class EventServiceLoggerHelper {
                         + "initiator_id={}, "
                         + "title='{}', "
                         + "event_date={}"
-                        + "] saved.",
+                        + "b = {}] saved.",
                 event.getId(),
                 event.getInitiator().getId(),
                 event.getTitle(),
-                event.getEventDate());
+                event.getEventDate(),
+                event.getRequestModeration());
     }
 
     public static void commentSaved(
@@ -144,10 +145,11 @@ public final class EventServiceLoggerHelper {
                         + "id={}, "
                         + "initiator_id={}, "
                         + "title='{}'"
-                        + "] updated by admin.",
+                        + "b = {}] updated by admin.",
                 event.getId(),
                 event.getInitiator().getId(),
-                event.getTitle());
+                event.getTitle(),
+                event.getRequestModeration());
     }
 
     public static void eventUpdatedByUser(
@@ -157,10 +159,11 @@ public final class EventServiceLoggerHelper {
         logger.info("EVENT["
                         + "id={}, "
                         + "initiator_id={}, "
-                        + "title='{}'] updated by user.",
+                        + "title='{}', b  ={}] updated by user.",
                 event.getId(),
                 event.getInitiator().getId(),
-                event.getTitle());
+                event.getTitle(),
+                event.getRequestModeration());
     }
 
     public static void requestsUpdated(
