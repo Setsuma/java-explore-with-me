@@ -24,7 +24,7 @@ public final class ParticipationValidator {
             Integer confirmedRequests,
             Integer participantLimit
     ) {
-        if ((confirmedRequests + participants) > participantLimit) {
+        if (participantLimit != 0 && (confirmedRequests + participants) > participantLimit) {
             throw new ConflictException("Event has reached the limit of participation requests");
         }
     }

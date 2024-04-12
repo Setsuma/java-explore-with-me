@@ -12,6 +12,7 @@ import ru.practicum.ewm.entity.event.dto.response.EventShortResponseDto;
 import ru.practicum.ewm.entity.event.dto.response.comment.CommentResponseDto;
 import ru.practicum.ewm.entity.event.entity.Event;
 import ru.practicum.ewm.entity.event.entity.comment.Comment;
+import ru.practicum.ewm.entity.event.exception.EventNotFoundException;
 import ru.practicum.ewm.entity.event.logging.EventServiceLoggerHelper;
 import ru.practicum.ewm.entity.event.mapper.EventMapper;
 import ru.practicum.ewm.entity.event.mapper.comment.CommentMapper;
@@ -43,6 +44,9 @@ public class EventPublicServiceImpl implements EventPublicService {
     public EventFullResponseDto getEventById(Long id, HttpServletRequest request) {
         eventRepository.checkEventExistsById(id);
         Event event = eventRepository.getReferenceById(id);
+        if (event.getState() != Event.State.PUBLISHED){
+            throw EventNotFoundException.fromEventId(id);
+        }
         eventStatisticsService.addEventView(request, LocalDateTime.now());
         EventFullResponseDto eventDto = getEventFullResponseDto(event, request);
         EventServiceLoggerHelper.eventDtoReturned(log, eventDto);
