@@ -20,7 +20,7 @@ public final class EventServiceLoggerHelper {
             Logger logger,
             Event event
     ) {
-        logger.debug("EVENT["
+        logger.info("EVENT["
                         + "id={}, "
                         + "initiator_id={}, "
                         + "title='{}', "
@@ -140,7 +140,7 @@ public final class EventServiceLoggerHelper {
             Logger logger,
             Event event
     ) {
-        logger.debug("EVENT["
+        logger.info("EVENT["
                         + "id={}, "
                         + "initiator_id={}, "
                         + "title='{}'"
@@ -154,7 +154,7 @@ public final class EventServiceLoggerHelper {
             Logger logger,
             Event event
     ) {
-        logger.debug("EVENT["
+        logger.info("EVENT["
                         + "id={}, "
                         + "initiator_id={}, "
                         + "title='{}'] updated by user.",
