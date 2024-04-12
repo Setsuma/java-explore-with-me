@@ -23,7 +23,7 @@ public final class EventControllerLoggerHelper {
     ) {
         logger.info("add EVENT["
                         + "title='{}'"
-                        + "b = {].",
+                        + "b = {}].",
                 eventDto.getTitle(),
                 eventDto.getRequestModeration());
     }
