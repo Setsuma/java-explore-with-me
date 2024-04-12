@@ -23,8 +23,9 @@ public final class EventControllerLoggerHelper {
     ) {
         logger.info("add EVENT["
                         + "title='{}'"
-                        + "].",
-                eventDto.getTitle());
+                        + "b = {].",
+                eventDto.getTitle(),
+                eventDto.getRequestModeration());
     }
 
     public static void addComment(
