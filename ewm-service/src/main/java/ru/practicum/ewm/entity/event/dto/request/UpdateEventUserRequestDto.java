@@ -26,7 +26,7 @@ public class UpdateEventUserRequestDto {
     private Boolean paid;
     @PositiveOrZero
     private Integer participantLimit;
-    private Boolean requestModeration;
+    private Boolean requestModeration = null;
     private Event.InitiatorStateAction stateAction;
 
     @Size(min = 3, max = 120)
