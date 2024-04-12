@@ -35,7 +35,9 @@ public class ParticipationPrivateServiceImpl implements ParticipationPrivateServ
         eventRepository.checkEventExistsById(eventId);
         checkRequest(requesterId, eventId);
         Participation request = getParticipationRequest(requesterId, eventId);
+        log.info("-----f " + request.getStatus());
         Participation savedRequest = requestRepository.save(request);
+        log.info("-----s " + savedRequest.getStatus());
         ParticipationServiceLoggingHelper.participationSaved(log, savedRequest);
         return ParticipationMapper.toParticipationResponseDto(savedRequest);
     }
