@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import ru.practicum.ewm.exception.ConflictException;
+import ru.practicum.ewm.exception.ValEx;
 
 import javax.persistence.EntityNotFoundException;
 import javax.servlet.ServletException;
@@ -27,7 +28,8 @@ public class GlobalExceptionHandler {
     @ExceptionHandler({
             ServletException.class,
             MethodArgumentNotValidException.class,
-            HttpMessageNotReadableException.class
+            HttpMessageNotReadableException.class,
+            ValEx.class
     })
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ApiError badRequestExceptionsHandle(final Exception ex) {

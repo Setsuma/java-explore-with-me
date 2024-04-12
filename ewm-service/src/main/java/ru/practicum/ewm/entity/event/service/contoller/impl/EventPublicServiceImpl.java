@@ -22,6 +22,7 @@ import ru.practicum.ewm.entity.event.service.contoller.EventPublicService;
 import ru.practicum.ewm.entity.event.service.statistics.EventStatisticsService;
 import ru.practicum.ewm.entity.participation.entity.Participation;
 import ru.practicum.ewm.entity.participation.repository.jpa.ParticipationRequestJpaRepository;
+import ru.practicum.ewm.exception.ValEx;
 
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
@@ -76,13 +77,21 @@ public class EventPublicServiceImpl implements EventPublicService {
             Integer size,
             HttpServletRequest request
     ) {
+        LocalDateTime start = rangeStart;
+        LocalDateTime end = rangeEnd;
+
+        if (rangeStart == null && rangeEnd == null) start = LocalDateTime.now();
+        if (rangeStart != null && rangeEnd != null) {
+            if (rangeEnd.isAfter(rangeStart)) throw new ValEx("ошибка дат");
+        }
+
         Pageable pageable = PageRequest.of(from, size);
         Iterable<Event> events = eventRepository.searchEventsByParameters(
                 text,
                 categories,
                 paid,
-                rangeStart,
-                rangeEnd,
+                start,
+                end,
                 Event.State.PUBLISHED,
                 pageable);
 

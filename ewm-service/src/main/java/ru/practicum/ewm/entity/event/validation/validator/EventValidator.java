@@ -4,6 +4,7 @@ import lombok.experimental.UtilityClass;
 import ru.practicum.ewm.entity.event.entity.Event;
 import ru.practicum.ewm.entity.participation.entity.Participation;
 import ru.practicum.ewm.exception.ConflictException;
+import ru.practicum.ewm.exception.ValEx;
 
 import java.time.LocalDateTime;
 
@@ -38,7 +39,7 @@ public final class EventValidator {
     @SuppressWarnings("java:S109")
     public static void validateEventDateMoreThanTwoHoursAfterCurrentTime(Event event) {
         if (!event.getEventDate().minusHours(2L).isAfter(LocalDateTime.now())) {
-            throw new ConflictException("Event date cannot be earlier than two hours from the current moment");
+            throw new ValEx("Event date cannot be earlier than two hours from the current moment");
         }
     }
 
