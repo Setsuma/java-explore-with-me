@@ -13,7 +13,6 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 public class AddCompilationRequestDto {
-    @NotNull
     private Set<Long> events;
 
     private Boolean pinned;
