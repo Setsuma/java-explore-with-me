@@ -82,7 +82,7 @@ public class EventPublicServiceImpl implements EventPublicService {
 
         if (rangeStart == null && rangeEnd == null) start = LocalDateTime.now();
         if (rangeStart != null && rangeEnd != null) {
-            if (rangeEnd.isAfter(rangeStart)) throw new ValEx("ошибка дат");
+            if (rangeEnd.isBefore(rangeStart)) throw new ValEx("ошибка дат");
         }
 
         Pageable pageable = PageRequest.of(from, size);
