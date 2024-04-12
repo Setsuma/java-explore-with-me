@@ -6,13 +6,15 @@ import lombok.Setter;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.Set;
 
 @Getter
 @Setter
 @NoArgsConstructor
 public class AddCompilationRequestDto {
-    private Set<Long> events;
+    private Set<Long> events = Collections.emptySet();
 
     private Boolean pinned;
 
