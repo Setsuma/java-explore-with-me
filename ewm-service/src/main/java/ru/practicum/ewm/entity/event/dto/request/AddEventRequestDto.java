@@ -34,7 +34,7 @@ public class AddEventRequestDto {
     private Boolean paid = false;
     @PositiveOrZero
     private Integer participantLimit = 0;
-    private Boolean requestModeration = true;
+    private Boolean requestModeration = Boolean.TRUE;
 
     @NotBlank
     @Size(min = 3, max = 120)
