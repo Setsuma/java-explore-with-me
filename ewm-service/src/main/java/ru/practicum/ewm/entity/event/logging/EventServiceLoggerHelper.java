@@ -11,7 +11,6 @@ import ru.practicum.ewm.entity.participation.dto.response.ParticipationResponseD
 import java.util.List;
 
 @UtilityClass
-@SuppressWarnings("java:S1192")
 public final class EventServiceLoggerHelper {
 
     public static void eventSaved(

@@ -8,7 +8,6 @@ import ru.practicum.ewm.entity.category.entity.Category;
 import java.util.Collection;
 
 @UtilityClass
-@SuppressWarnings("java:S1192")
 public final class CategoryServiceLoggerHelper {
 
     public static void categorySaved(

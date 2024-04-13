@@ -12,7 +12,6 @@ import java.time.LocalDateTime;
 import java.util.Set;
 
 @UtilityClass
-@SuppressWarnings({"java:S1192", "java:S107"})
 public final class EventControllerLoggerHelper {
 
     public static void addEvent(
@@ -188,50 +187,5 @@ public final class EventControllerLoggerHelper {
                 rangeStart,
                 rangeEnd,
                 onlyAvailable);
-    }
-
-    public static void getCommentById(
-            Logger logger,
-            Long eventId,
-            Long comId
-    ) {
-        logger.info("get COMMENT<DTO>["
-                        + "comment_id={}, "
-                        + "event_id={}"
-                        + "].",
-                comId,
-                eventId);
-    }
-
-    public static void getCommentDtoPage(
-            Logger logger,
-            Integer from,
-            Integer size,
-            Long id
-    ) {
-        logger.info("get COMMENT_PAGE<DTO>["
-                        + "from={}, "
-                        + "size={}, "
-                        + "event_id={}"
-                        + "].",
-                from,
-                size,
-                id);
-    }
-
-    public static void deleteCommentById(
-            Logger logger,
-            Long userId,
-            Long eventId,
-            Long comId
-    ) {
-        logger.info("delete COMMENT["
-                        + "comment_id={}, "
-                        + "author_id={}, "
-                        + "event_id={}"
-                        + "].",
-                comId,
-                userId,
-                eventId);
     }
 }

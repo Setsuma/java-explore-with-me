@@ -8,7 +8,6 @@ import ru.practicum.ewm.entity.participation.entity.Participation;
 import java.util.List;
 
 @UtilityClass
-@SuppressWarnings("java:S1192")
 public final class ParticipationServiceLoggingHelper {
 
     public static void participationSaved(

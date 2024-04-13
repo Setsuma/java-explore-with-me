@@ -8,7 +8,6 @@ import ru.practicum.ewm.entity.compilation.entity.Compilation;
 import java.util.List;
 
 @UtilityClass
-@SuppressWarnings("java:S1192")
 public final class CompilationServiceLoggerHelper {
 
     public static void compilationSaved(
