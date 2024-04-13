@@ -69,7 +69,6 @@ public class GlobalExceptionHandler {
                 .build();
     }
 
-    @SuppressWarnings("java:S1168")
     public static List<String> getErrors(Throwable throwable) {
         if (throwable.getCause() == null) {
             return null;
