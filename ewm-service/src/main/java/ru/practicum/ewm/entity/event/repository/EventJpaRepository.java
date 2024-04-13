@@ -29,9 +29,9 @@ public interface EventJpaRepository extends JpaRepository<Event, Long> {
             + "  AND "
             + "    (((:categoryIds) IS NULL) OR (events.category.id IN (:categoryIds))) "
             + "  AND "
-            + "    ((:start IS NULL) OR (events.eventDate >= :start)) "
+            + "    ((CAST(:start AS date) IS NULL) OR (events.eventDate >= :start)) "
             + "  AND "
-            + "    ((:end IS NULL) OR (events.eventDate <= :end)) ")
+            + "    ((CAST(:end AS date) IS NULL) OR (events.eventDate <= :end)) ")
     Page<Event> searchEventsByAdminParameters(
             @Param("userIds") Set<Long> userIds,
             @Param("states") Set<Event.State> states,
@@ -56,9 +56,9 @@ public interface EventJpaRepository extends JpaRepository<Event, Long> {
             + "  AND "
             + "    ((:categoryIds) IS NULL OR events.category.id IN (:categoryIds)) "
             + "  AND "
-            + "    (:start IS NULL OR events.eventDate >= :start) "
+            + "    (CAST(:start AS date) IS NULL OR events.eventDate >= :start) "
             + "  AND "
-            + "    (:end IS NULL OR events.eventDate <= :end) ")
+            + "    (CAST(:end AS date) IS NULL OR events.eventDate <= :end) ")
     Page<Event> searchEventsByParameters(
             @Param("text") String text,
             @Param("categoryIds") Set<Long> categoryIds,
