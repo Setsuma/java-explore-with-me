@@ -18,7 +18,7 @@ import ru.practicum.ewm.entity.event.service.contoller.EventPublicService;
 import ru.practicum.ewm.entity.event.service.statistics.EventStatisticsService;
 import ru.practicum.ewm.entity.participation.entity.Participation;
 import ru.practicum.ewm.entity.participation.repository.jpa.ParticipationRequestJpaRepository;
-import ru.practicum.ewm.exception.ValEx;
+import ru.practicum.ewm.exception.ValidException;
 
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
@@ -30,7 +30,6 @@ import java.util.stream.StreamSupport;
 @Transactional(readOnly = true)
 @Slf4j
 @RequiredArgsConstructor
-@SuppressWarnings("java:S1200")
 public class EventPublicServiceImpl implements EventPublicService {
     private final EventStatisticsService eventStatisticsService;
     private final EventJpaRepository eventRepository;
@@ -67,7 +66,7 @@ public class EventPublicServiceImpl implements EventPublicService {
 
         if (rangeStart == null && rangeEnd == null) start = LocalDateTime.now();
         if (rangeStart != null && rangeEnd != null) {
-            if (rangeEnd.isBefore(rangeStart)) throw new ValEx("ошибка дат");
+            if (rangeEnd.isBefore(rangeStart)) throw new ValidException("ошибка дат");
         }
 
         Pageable pageable = PageRequest.of(from, size);
@@ -99,7 +98,6 @@ public class EventPublicServiceImpl implements EventPublicService {
         return eventDtos;
     }
 
-    @SuppressWarnings("java:S112")
     private static List<EventShortResponseDto> sortEvents(
             @NonNull Event.Sort sort,
             Iterable<EventShortResponseDto> eventDtos

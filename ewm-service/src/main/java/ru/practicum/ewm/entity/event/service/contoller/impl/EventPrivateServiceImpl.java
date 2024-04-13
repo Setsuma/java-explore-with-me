@@ -35,7 +35,6 @@ import java.util.Optional;
 @Transactional(readOnly = true)
 @Slf4j
 @RequiredArgsConstructor
-@SuppressWarnings("java:S1200")
 public class EventPrivateServiceImpl implements EventPrivateService {
     private final EventJpaRepository eventRepository;
     private final UserJpaRepository userRepository;
@@ -119,7 +118,6 @@ public class EventPrivateServiceImpl implements EventPrivateService {
         return EventMapper.toEventRequestStatusUpdateResponseDto(requests);
     }
 
-    @SuppressWarnings("java:S112")
     private static void performActionIfExists(Event event, Event.InitiatorStateAction stateAction) {
         if (stateAction == null) {
             return;

@@ -13,7 +13,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import ru.practicum.ewm.exception.ConflictException;
-import ru.practicum.ewm.exception.ValEx;
+import ru.practicum.ewm.exception.ValidException;
+import ru.practicum.hit.dto.exception.DateException;
 
 import javax.persistence.EntityNotFoundException;
 import javax.servlet.ServletException;
@@ -29,7 +30,8 @@ public class GlobalExceptionHandler {
             ServletException.class,
             MethodArgumentNotValidException.class,
             HttpMessageNotReadableException.class,
-            ValEx.class
+            ValidException.class,
+            DateException.class
     })
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ApiError badRequestExceptionsHandle(final Exception ex) {

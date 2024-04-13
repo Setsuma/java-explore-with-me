@@ -75,7 +75,6 @@ public class EventAdminServiceImpl implements EventAdminService {
         return EventMapper.toEventFullResponseDto(savedEvent, null, null);
     }
 
-    @SuppressWarnings("java:S112")
     private static void performActionIfExists(Event event, Event.AdminStateAction stateAction) {
         if (stateAction == null) {
             return;
@@ -94,7 +93,6 @@ public class EventAdminServiceImpl implements EventAdminService {
         }
     }
 
-    @SuppressWarnings("java:S126")
     private static void checkEventAdminUpdate(Event event, Event.AdminStateAction stateAction) {
         EventValidator.validateEventDateMoreThanHourAfterPublication(event);
 
