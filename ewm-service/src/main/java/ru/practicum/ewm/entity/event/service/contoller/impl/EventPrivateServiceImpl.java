@@ -10,19 +10,13 @@ import ru.practicum.ewm.entity.category.entity.Category;
 import ru.practicum.ewm.entity.category.repository.CategoryJpaRepository;
 import ru.practicum.ewm.entity.event.dto.request.AddEventRequestDto;
 import ru.practicum.ewm.entity.event.dto.request.UpdateEventUserRequestDto;
-import ru.practicum.ewm.entity.event.dto.request.comment.AddCommentRequestDto;
-import ru.practicum.ewm.entity.event.dto.request.comment.UpdateCommentRequestDto;
 import ru.practicum.ewm.entity.event.dto.response.EventFullResponseDto;
 import ru.practicum.ewm.entity.event.dto.response.EventRequestsByStatusResponseDto;
 import ru.practicum.ewm.entity.event.dto.response.EventShortResponseDto;
-import ru.practicum.ewm.entity.event.dto.response.comment.CommentResponseDto;
 import ru.practicum.ewm.entity.event.entity.Event;
-import ru.practicum.ewm.entity.event.entity.comment.Comment;
 import ru.practicum.ewm.entity.event.logging.EventServiceLoggerHelper;
 import ru.practicum.ewm.entity.event.mapper.EventMapper;
-import ru.practicum.ewm.entity.event.mapper.comment.CommentMapper;
 import ru.practicum.ewm.entity.event.repository.EventJpaRepository;
-import ru.practicum.ewm.entity.event.repository.comment.CommentJpaRepository;
 import ru.practicum.ewm.entity.event.service.contoller.EventPrivateService;
 import ru.practicum.ewm.entity.event.validation.validator.EventValidator;
 import ru.practicum.ewm.entity.participation.dto.request.UpdateEventParticipationStatusRequestDto;
@@ -47,7 +41,6 @@ public class EventPrivateServiceImpl implements EventPrivateService {
     private final UserJpaRepository userRepository;
     private final CategoryJpaRepository categoryRepository;
     private final ParticipationRequestJpaRepository requestRepository;
-    private final CommentJpaRepository commentRepository;
 
     @Override
     @Transactional
@@ -61,16 +54,6 @@ public class EventPrivateServiceImpl implements EventPrivateService {
         return EventMapper.toEventFullResponseDto(savedEvent, null, null);
     }
 
-    @Override
-    @Transactional
-    public CommentResponseDto addComment(Long userId, Long eventId, AddCommentRequestDto commentDto) {
-        userRepository.checkUserExistsById(userId);
-        eventRepository.checkEventExistsById(eventId);
-        Comment comment = getComment(commentDto, userId, eventId);
-        Comment savedComment = commentRepository.save(comment);
-        EventServiceLoggerHelper.commentSaved(log, savedComment);
-        return CommentMapper.toCommentResponseDto(savedComment);
-    }
 
     @Override
     public EventFullResponseDto getEventById(Long userId, Long eventId) {
@@ -136,33 +119,6 @@ public class EventPrivateServiceImpl implements EventPrivateService {
         return EventMapper.toEventRequestStatusUpdateResponseDto(requests);
     }
 
-    @Override
-    @Transactional
-    public CommentResponseDto updateCommentById(
-            Long userId,
-            Long eventId,
-            Long comId,
-            UpdateCommentRequestDto commentDto
-    ) {
-        userRepository.checkUserExistsById(userId);
-        eventRepository.checkEventExistsById(eventId);
-        commentRepository.checkCommentExistsById(comId);
-        Comment updatedComment = getUpdatedComment(comId, commentDto);
-        Comment savedComment = commentRepository.save(updatedComment);
-        EventServiceLoggerHelper.commentUpdated(log, savedComment);
-        return CommentMapper.toCommentResponseDto(savedComment);
-    }
-
-    @Override
-    @Transactional
-    public void deleteCommentById(Long userId, Long eventId, Long comId) {
-        userRepository.checkUserExistsById(userId);
-        eventRepository.checkEventExistsById(eventId);
-        commentRepository.checkCommentExistsById(comId);
-        commentRepository.deleteById(comId);
-        EventServiceLoggerHelper.commentDeleted(log, comId, userId, eventId);
-    }
-
     @SuppressWarnings("java:S112")
     private static void performActionIfExists(Event event, Event.InitiatorStateAction stateAction) {
         if (stateAction == null) {
@@ -186,20 +142,6 @@ public class EventPrivateServiceImpl implements EventPrivateService {
         Category category = categoryRepository.getReferenceById(eventDto.getCategory());
         User initiator = userRepository.getReferenceById(initiatorId);
         return EventMapper.toEvent(eventDto, category, initiator);
-    }
-
-    private Comment getUpdatedComment(Long comId, UpdateCommentRequestDto commentDto) {
-        Comment comment = commentRepository.getReferenceById(comId);
-
-        comment.setText(commentDto.getText());
-
-        return comment;
-    }
-
-    private Comment getComment(AddCommentRequestDto commentDto, Long userId, Long eventId) {
-        User author = userRepository.getReferenceById(userId);
-        Event event = eventRepository.getReferenceById(eventId);
-        return CommentMapper.toComment(commentDto, author, event);
     }
 
 

@@ -5,8 +5,6 @@ import org.slf4j.Logger;
 import ru.practicum.ewm.entity.event.dto.request.AddEventRequestDto;
 import ru.practicum.ewm.entity.event.dto.request.UpdateEventAdminRequestDto;
 import ru.practicum.ewm.entity.event.dto.request.UpdateEventUserRequestDto;
-import ru.practicum.ewm.entity.event.dto.request.comment.AddCommentRequestDto;
-import ru.practicum.ewm.entity.event.dto.request.comment.UpdateCommentRequestDto;
 import ru.practicum.ewm.entity.event.entity.Event;
 import ru.practicum.ewm.entity.participation.dto.request.UpdateEventParticipationStatusRequestDto;
 
@@ -28,21 +26,6 @@ public final class EventControllerLoggerHelper {
                 eventDto.getRequestModeration());
     }
 
-    public static void addComment(
-            Logger logger,
-            Long userId,
-            Long eventId,
-            AddCommentRequestDto commentDto
-    ) {
-        logger.info("add COMMENT["
-                        + "author_id={}, "
-                        + "event_id={}, "
-                        + "text='{}'"
-                        + "].",
-                userId,
-                eventId,
-                commentDto.getText());
-    }
 
     public static void getEventDtoPageByParameters(
             Logger logger,
@@ -234,25 +217,6 @@ public final class EventControllerLoggerHelper {
                 from,
                 size,
                 id);
-    }
-
-    public static void updateCommentById(
-            Logger logger,
-            Long userId,
-            Long eventId,
-            Long comId,
-            UpdateCommentRequestDto commentDto
-    ) {
-        logger.info("update COMMENT["
-                        + "comment_id={}, "
-                        + "author_id={}, "
-                        + "event_id={}, "
-                        + "new_text='{}'"
-                        + "].",
-                comId,
-                userId,
-                eventId,
-                commentDto.getText());
     }
 
     public static void deleteCommentById(
