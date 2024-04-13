@@ -23,32 +23,22 @@ import java.util.stream.StreamSupport;
 @Repository
 public interface ParticipationRequestJpaRepository extends JpaRepository<Participation, Long> {
 
-    @Query(""
-            + "SELECT "
-            + "  COUNT(*) "
-            + "FROM "
-            + "  Participation AS requests "
-            + "WHERE "
-            + "  requests.event.id = ?1 "
-            + "AND "
-            + " requests.status = ?2 ")
-    Integer getEventRequestsCount(Long eventId, Status requestStatus);
+    @Query(value = "SELECT COUNT(*) "
+                 + "FROM Participation AS requests "
+                 + "WHERE requests.event.id = :eventId "
+                 + "      AND requests.status = :status ")
+    Integer getEventRequestsCount(
+            @Param("eventId") Long eventId,
+            @Param("status") Status requestStatus);
 
-    @Query(""
-            + "SELECT "
-            + "  new ru.practicum.ewm.entity.participation.repository.jpa.model.EventRequestsCount( "
-            + "    requests.event.id, "
-            + "    COUNT(*), "
-            + "    requests.status "
-            + "  ) "
-            + "FROM "
-            + "  Participation AS requests "
-            + "WHERE "
-            + "  ((:eventIds) IS NULL OR requests.event.id IN (:eventIds)) "
-            + "AND "
-            + "  (requests.status = :status) "
-            + "GROUP BY "
-            + "  requests.id ")
+    @Query(value = "SELECT new ru.practicum.ewm.entity.participation.repository.jpa.model.EventRequestsCount( "
+                + " requests.event.id, "
+                + " COUNT(*), "
+                + " requests.status) "
+                + " FROM Participation AS requests "
+                + " WHERE ((:eventIds) IS NULL OR requests.event.id IN (:eventIds)) "
+                + "       AND (requests.status = :status) "
+                + " GROUP BY requests.id ")
     List<EventRequestsCount> getEventsRequestsCount(
             @Param("eventIds") Set<Long> eventIds,
             @Param("status") Status requestStatus);

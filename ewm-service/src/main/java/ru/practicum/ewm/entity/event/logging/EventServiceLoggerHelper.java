@@ -22,8 +22,8 @@ public final class EventServiceLoggerHelper {
                         + "id={}, "
                         + "initiator_id={}, "
                         + "title='{}', "
-                        + "event_date={}"
-                        + "b = {}] saved.",
+                        + "event_date={}, "
+                        + "moderation = {}] saved.",
                 event.getId(),
                 event.getInitiator().getId(),
                 event.getTitle(),
@@ -126,8 +126,8 @@ public final class EventServiceLoggerHelper {
         logger.info("EVENT["
                         + "id={}, "
                         + "initiator_id={}, "
-                        + "title='{}'"
-                        + "b = {}] updated by admin.",
+                        + "title='{}', "
+                        + "moderation = {}] updated by admin.",
                 event.getId(),
                 event.getInitiator().getId(),
                 event.getTitle(),
@@ -141,7 +141,8 @@ public final class EventServiceLoggerHelper {
         logger.info("EVENT["
                         + "id={}, "
                         + "initiator_id={}, "
-                        + "title='{}', b  ={}] updated by user.",
+                        + "title='{}', "
+                        + "moderation = {}] updated by user.",
                 event.getId(),
                 event.getInitiator().getId(),
                 event.getTitle(),

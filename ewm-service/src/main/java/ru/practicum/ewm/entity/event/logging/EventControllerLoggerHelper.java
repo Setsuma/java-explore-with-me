@@ -20,8 +20,8 @@ public final class EventControllerLoggerHelper {
             AddEventRequestDto eventDto
     ) {
         logger.info("add EVENT["
-                        + "title='{}'"
-                        + "b = {}].",
+                        + "title='{}', "
+                        + "moderation = {}].",
                 eventDto.getTitle(),
                 eventDto.getRequestModeration());
     }
