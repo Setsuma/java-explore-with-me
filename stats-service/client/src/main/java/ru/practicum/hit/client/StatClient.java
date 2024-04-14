@@ -1,10 +1,12 @@
 package ru.practicum.hit.client;
 
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.reactive.function.client.WebClient;
 import ru.practicum.hit.dto.EndpointHitDto;
 import ru.practicum.hit.dto.ViewStatsDto;
+import ru.practicum.hit.dto.exception.DateException;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -38,6 +40,9 @@ public class StatClient {
                         .queryParam("unique", unique)
                         .build())
                 .retrieve()
+                .onStatus(
+                        HttpStatus.BAD_REQUEST::equals,
+                        response -> response.bodyToMono(String.class).map(DateException::new))
                 .bodyToFlux(ViewStatsDto.class)
                 .collectList()
                 .block();

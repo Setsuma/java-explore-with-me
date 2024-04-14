@@ -33,14 +33,20 @@ services:
       - "8080:8080"
     depends_on:
       - stats-server
+      - ewm-db
     environment:
-      - STAT_SERVICE_URL=http://localhost:9090
+      - STAT_SERVICE_URL=http://stats-server:9090
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://ewm-db:5432/ewm
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
 
   ewm-db:
     image: postgres:14-alpine
     container_name: ewm-db
     ports:
       - "6542:5432"
+    volumes:
+      - ./ewm-database:/docker-entrypoint-initdb.d
     environment:
       - POSTGRES_DB=ewm
       - POSTGRES_USER=postgres
