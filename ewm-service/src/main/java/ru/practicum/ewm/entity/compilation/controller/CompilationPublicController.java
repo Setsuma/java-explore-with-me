@@ -5,7 +5,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.ewm.entity.compilation.dto.response.CompilationResponseDto;
-import ru.practicum.ewm.entity.compilation.logging.CompilationControllerLoggerHelper;
 import ru.practicum.ewm.entity.compilation.service.CompilationPublicService;
 
 import javax.validation.constraints.Positive;
@@ -23,7 +22,7 @@ public class CompilationPublicController {
     public CompilationResponseDto getCompilationById(
             @PathVariable Long compId
     ) {
-        CompilationControllerLoggerHelper.getCompilationById(log, compId);
+        log.info("GET COMPILATION REQUEST: comId = {}", compId);
         return compilationService.getCompilationById(compId);
     }
 
@@ -33,7 +32,7 @@ public class CompilationPublicController {
             @RequestParam(defaultValue = "0") @PositiveOrZero Integer from,
             @RequestParam(defaultValue = "10") @Positive Integer size
     ) {
-        CompilationControllerLoggerHelper.getCompilationDtoPageByPinned(log, pinned, from, size);
+        log.info("GET COMPILATIONS BY PINNED REQUEST: pinned = {}, from = {}, size = {}", pinned, from, size);
         return compilationService.getCompilationsByPinned(pinned, from, size);
     }
 }

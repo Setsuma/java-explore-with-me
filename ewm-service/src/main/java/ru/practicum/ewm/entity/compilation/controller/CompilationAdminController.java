@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.*;
 import ru.practicum.ewm.entity.compilation.dto.request.AddCompilationRequestDto;
 import ru.practicum.ewm.entity.compilation.dto.request.UpdateCompilationRequestDto;
 import ru.practicum.ewm.entity.compilation.dto.response.CompilationResponseDto;
-import ru.practicum.ewm.entity.compilation.logging.CompilationControllerLoggerHelper;
 import ru.practicum.ewm.entity.compilation.service.CompilationAdminService;
 
 import javax.validation.Valid;
@@ -24,7 +23,7 @@ public class CompilationAdminController {
     public CompilationResponseDto addCompilation(
             @RequestBody @Valid AddCompilationRequestDto compilationDto
     ) {
-        CompilationControllerLoggerHelper.addCompilation(log, compilationDto);
+        log.info("ADD COMPILATION REQUEST: " + compilationDto);
         return compilationService.addCompilation(compilationDto);
     }
 
@@ -33,7 +32,7 @@ public class CompilationAdminController {
             @PathVariable Long compId,
             @RequestBody @Valid UpdateCompilationRequestDto compilationDto
     ) {
-        CompilationControllerLoggerHelper.updateCompilationById(log, compId, compilationDto);
+        log.info("UPDATE COMPILATION REQUEST: comId = {}, " + compilationDto, compId);
         return compilationService.updateCompilation(compId, compilationDto);
     }
 
@@ -42,7 +41,7 @@ public class CompilationAdminController {
     public void deleteCompilationById(
             @PathVariable Long compId
     ) {
-        CompilationControllerLoggerHelper.deleteCompilationById(log, compId);
+        log.info("DELETE COMPILATION REQUEST: comId = {}", compId);
         compilationService.deleteCompilationById(compId);
     }
 }

@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.ewm.entity.category.dto.response.CategoryResponseDto;
 import ru.practicum.ewm.entity.category.entity.Category;
-import ru.practicum.ewm.entity.category.logging.CategoryServiceLoggerHelper;
 import ru.practicum.ewm.entity.category.mapper.CategoryMapper;
 import ru.practicum.ewm.entity.category.repository.CategoryJpaRepository;
 import ru.practicum.ewm.entity.category.service.CategoryPublicService;
@@ -27,7 +26,7 @@ public class CategoryPublicServiceImpl implements CategoryPublicService {
         categoryRepository.checkCategoryExistsById(catId);
         Category category = categoryRepository.getReferenceById(catId);
         CategoryResponseDto categoryDto = CategoryMapper.toCategoryResponseDto(category);
-        CategoryServiceLoggerHelper.categoryDtoReturned(log, categoryDto);
+        log.info("CATEGORY FOUND: " + categoryDto);
         return categoryDto;
     }
 
@@ -35,7 +34,7 @@ public class CategoryPublicServiceImpl implements CategoryPublicService {
     public List<CategoryResponseDto> getCategories(Integer from, Integer size) {
         Page<Category> categories = categoryRepository.findAll(PageRequest.of(from, size));
         List<CategoryResponseDto> categoryDtos = CategoryMapper.toCategoryResponseDto(categories);
-        CategoryServiceLoggerHelper.categoryDtoPageReturned(log, from, size, categoryDtos);
+        log.info("CATEGORIES FOUND: " + categoryDtos);
         return categoryDtos;
     }
 }

@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.*;
 import ru.practicum.ewm.entity.event.dto.response.EventFullResponseDto;
 import ru.practicum.ewm.entity.event.dto.response.EventShortResponseDto;
 import ru.practicum.ewm.entity.event.entity.Event;
-import ru.practicum.ewm.entity.event.logging.EventControllerLoggerHelper;
 import ru.practicum.ewm.entity.event.service.contoller.EventPublicService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -29,7 +28,7 @@ public class EventPublicController {
             @PathVariable Long id,
             HttpServletRequest request
     ) {
-        EventControllerLoggerHelper.getEventById(log, id);
+        log.info("GET EVENT BY ID: eventID = {}", id);
         return eventPublicService.getEventById(id, request);
     }
 
@@ -46,8 +45,9 @@ public class EventPublicController {
             @RequestParam(defaultValue = "10") @Positive Integer size,
             HttpServletRequest request
     ) {
-        EventControllerLoggerHelper.getEventDtoPageByParameters(
-                log, from, size, sort, text, categories, paid, rangeStart, rangeEnd, onlyAvailable);
+        log.info("GET EVENTS BY PARAMETERS PUBLIC REQUEST: text = {}, " + categories + ", paid = {}, " +
+                        "start = {}, end = {}, onlyAvailable = {}, sort = {}, from = {}, size = {}",
+                text, paid, rangeStart, rangeEnd, onlyAvailable, sort, from, size);
         return eventPublicService.searchEventsByParameters(
                 text, categories, paid, rangeStart, rangeEnd, onlyAvailable, sort, from, size, request);
     }

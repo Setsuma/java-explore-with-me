@@ -1,6 +1,7 @@
 package ru.practicum.ewm.entity.compilation.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -14,10 +15,8 @@ import java.util.List;
 import static com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 @JsonInclude(Include.NON_NULL)
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
-@SuppressWarnings("java:S2972")
 public class CompilationResponseDto {
     private Long id;
     private String title;

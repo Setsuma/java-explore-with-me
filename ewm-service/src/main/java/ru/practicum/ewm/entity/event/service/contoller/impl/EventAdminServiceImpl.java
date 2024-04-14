@@ -11,7 +11,6 @@ import ru.practicum.ewm.entity.category.repository.CategoryJpaRepository;
 import ru.practicum.ewm.entity.event.dto.request.UpdateEventAdminRequestDto;
 import ru.practicum.ewm.entity.event.dto.response.EventFullResponseDto;
 import ru.practicum.ewm.entity.event.entity.Event;
-import ru.practicum.ewm.entity.event.logging.EventServiceLoggerHelper;
 import ru.practicum.ewm.entity.event.mapper.EventMapper;
 import ru.practicum.ewm.entity.event.repository.EventJpaRepository;
 import ru.practicum.ewm.entity.event.service.contoller.EventAdminService;
@@ -59,7 +58,7 @@ public class EventAdminServiceImpl implements EventAdminService {
                 eventStatisticsService.getEventViews(events, false),
                 requestRepository.getEventRequestsCount(events, Participation.Status.CONFIRMED));
         eventDtos.sort(Comparator.comparing(EventFullResponseDto::getId).reversed());
-        EventServiceLoggerHelper.eventDtoPageByAdminParametersReturned(log, from, size, eventDtos);
+        log.info("ADMIN EVENTS FOUND: " + eventDtos);
         return eventDtos;
     }
 
@@ -71,7 +70,7 @@ public class EventAdminServiceImpl implements EventAdminService {
         checkEventAdminUpdate(event, adminRequest.getStateAction());
         performActionIfExists(event, adminRequest.getStateAction());
         Event savedEvent = eventRepository.save(event);
-        EventServiceLoggerHelper.eventUpdatedByAdmin(log, savedEvent);
+        log.info("ADMIN EVENT UPDATED: " + savedEvent);
         return EventMapper.toEventFullResponseDto(savedEvent, null, null);
     }
 

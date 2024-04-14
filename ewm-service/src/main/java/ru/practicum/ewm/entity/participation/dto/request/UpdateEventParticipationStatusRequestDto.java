@@ -1,15 +1,13 @@
 package ru.practicum.ewm.entity.participation.dto.request;
 
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import ru.practicum.ewm.entity.participation.entity.Participation;
 
 import javax.validation.constraints.NotNull;
 import java.util.Set;
 
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 public class UpdateEventParticipationStatusRequestDto {
     @NotNull

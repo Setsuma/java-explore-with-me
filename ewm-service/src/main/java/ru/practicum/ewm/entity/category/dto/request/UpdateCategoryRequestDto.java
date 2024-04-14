@@ -1,14 +1,12 @@
 package ru.practicum.ewm.entity.category.dto.request;
 
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 public class UpdateCategoryRequestDto {
     @NotBlank

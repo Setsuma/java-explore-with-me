@@ -2,9 +2,8 @@ package ru.practicum.ewm.entity.event.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import ru.practicum.ewm.entity.category.entity.Category;
 import ru.practicum.ewm.entity.event.entity.Event;
 import ru.practicum.ewm.entity.user.entity.User;
@@ -12,8 +11,7 @@ import ru.practicum.ewm.entity.user.entity.User;
 import java.time.LocalDateTime;
 
 @JsonInclude(Include.NON_NULL)
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 public class EventFullResponseDto {
     private Long id;
@@ -34,8 +32,7 @@ public class EventFullResponseDto {
     private Boolean requestModeration;
 
     @JsonInclude(Include.NON_NULL)
-    @Getter
-    @Setter
+    @Data
     @NoArgsConstructor
     public static class CategoryDto {
         private Long id;
@@ -52,8 +49,7 @@ public class EventFullResponseDto {
     }
 
     @JsonInclude(Include.NON_NULL)
-    @Getter
-    @Setter
+    @Data
     @NoArgsConstructor
     public static class UserShortDto {
         private Long id;
@@ -70,8 +66,7 @@ public class EventFullResponseDto {
     }
 
     @JsonInclude(Include.NON_NULL)
-    @Getter
-    @Setter
+    @Data
     @NoArgsConstructor
     public static class Location {
         private Float lat;

@@ -2,25 +2,22 @@ package ru.practicum.ewm.entity.event.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import ru.practicum.ewm.entity.participation.entity.Participation;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 @JsonInclude(Include.NON_NULL)
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 public class EventRequestsByStatusResponseDto {
     private List<ParticipationDto> confirmedRequests;
     private List<ParticipationDto> rejectedRequests;
 
     @JsonInclude(Include.NON_NULL)
-    @Getter
-    @Setter
+    @Data
     @NoArgsConstructor
     public static class ParticipationDto {
         private Long id;

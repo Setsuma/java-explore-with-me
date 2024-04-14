@@ -8,7 +8,6 @@ import ru.practicum.ewm.entity.compilation.dto.request.AddCompilationRequestDto;
 import ru.practicum.ewm.entity.compilation.dto.request.UpdateCompilationRequestDto;
 import ru.practicum.ewm.entity.compilation.dto.response.CompilationResponseDto;
 import ru.practicum.ewm.entity.compilation.entity.Compilation;
-import ru.practicum.ewm.entity.compilation.logging.CompilationServiceLoggerHelper;
 import ru.practicum.ewm.entity.compilation.mapper.CompilationMapper;
 import ru.practicum.ewm.entity.compilation.repository.CompilationJpaRepository;
 import ru.practicum.ewm.entity.compilation.service.CompilationAdminService;
@@ -33,7 +32,7 @@ public class CompilationAdminServiceImpl implements CompilationAdminService {
         Set<Event> existsEvents = new HashSet<>(eventRepository.findAllById(compilationDto.getEvents()));
         Compilation compilation = CompilationMapper.toCompilation(compilationDto, existsEvents);
         Compilation savedCompilation = compilationRepository.save(compilation);
-        CompilationServiceLoggerHelper.compilationSaved(log, savedCompilation);
+        log.info("COMPILATION SAVED: " + savedCompilation);
         return CompilationMapper.toCompilationResponseDto(savedCompilation, null, null);
     }
 
@@ -43,7 +42,7 @@ public class CompilationAdminServiceImpl implements CompilationAdminService {
         compilationRepository.checkCompilationExistsById(compId);
         Compilation updatedCompilation = getUpdatedCompilation(compId, compilationDto);
         Compilation savedCompilation = compilationRepository.save(updatedCompilation);
-        CompilationServiceLoggerHelper.compilationUpdated(log, savedCompilation);
+        log.info("COMPILATION UPDATED: " + savedCompilation);
         return CompilationMapper.toCompilationResponseDto(savedCompilation, null, null);
     }
 
@@ -52,7 +51,7 @@ public class CompilationAdminServiceImpl implements CompilationAdminService {
     public void deleteCompilationById(Long compId) {
         compilationRepository.checkCompilationExistsById(compId);
         compilationRepository.deleteById(compId);
-        CompilationServiceLoggerHelper.compilationDeleted(log, compId);
+        log.info("COMPILATION DELETED: comId = {}", compId);
     }
 
     private Compilation getUpdatedCompilation(Long compId, UpdateCompilationRequestDto compilationDto) {

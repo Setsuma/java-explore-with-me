@@ -7,7 +7,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.ewm.entity.user.dto.request.AddUserRequestDto;
 import ru.practicum.ewm.entity.user.dto.response.UserResponseDto;
-import ru.practicum.ewm.entity.user.logging.UserControllerLoggerHelper;
 import ru.practicum.ewm.entity.user.service.UserAdminService;
 
 import javax.validation.Valid;
@@ -26,7 +25,7 @@ public class UserAdminController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public UserResponseDto addUser(@RequestBody @Valid AddUserRequestDto userDto) {
-        UserControllerLoggerHelper.addUser(log, userDto);
+        log.info("ADD USER REQUEST: " + userDto);
         return userAdminService.addUser(userDto);
     }
 
@@ -36,7 +35,7 @@ public class UserAdminController {
             @RequestParam(defaultValue = "0") @PositiveOrZero Integer from,
             @RequestParam(defaultValue = "10") @Positive Integer size
     ) {
-        UserControllerLoggerHelper.getUserDtoPageByIds(log, from, size, ids);
+        log.info("GET USERS REQUEST: ids = {}, from = {}, size = {}", ids, from, size);
         return userAdminService.getUsersByIds(ids, from, size);
     }
 
@@ -45,7 +44,7 @@ public class UserAdminController {
     public void deleteUserById(
             @PathVariable Long userId
     ) {
-        UserControllerLoggerHelper.deleteUserById(log, userId);
+        log.info("DELETE USER REQUEST: id = {}", userId);
         userAdminService.deleteUserById(userId);
     }
 }

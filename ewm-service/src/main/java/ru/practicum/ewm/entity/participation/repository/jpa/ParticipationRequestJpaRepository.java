@@ -24,21 +24,21 @@ import java.util.stream.StreamSupport;
 public interface ParticipationRequestJpaRepository extends JpaRepository<Participation, Long> {
 
     @Query(value = "SELECT COUNT(*) "
-                 + "FROM Participation AS requests "
-                 + "WHERE requests.event.id = :eventId "
-                 + "      AND requests.status = :status ")
+            + "FROM Participation AS requests "
+            + "WHERE requests.event.id = :eventId "
+            + "      AND requests.status = :status ")
     Integer getEventRequestsCount(
             @Param("eventId") Long eventId,
             @Param("status") Status requestStatus);
 
     @Query(value = "SELECT new ru.practicum.ewm.entity.participation.repository.jpa.model.EventRequestsCount( "
-                + " requests.event.id, "
-                + " COUNT(*), "
-                + " requests.status) "
-                + " FROM Participation AS requests "
-                + " WHERE ((:eventIds) IS NULL OR requests.event.id IN (:eventIds)) "
-                + "       AND (requests.status = :status) "
-                + " GROUP BY requests.id ")
+            + " requests.event.id, "
+            + " COUNT(*), "
+            + " requests.status) "
+            + " FROM Participation AS requests "
+            + " WHERE ((:eventIds) IS NULL OR requests.event.id IN (:eventIds)) "
+            + "       AND (requests.status = :status) "
+            + " GROUP BY requests.id ")
     List<EventRequestsCount> getEventsRequestsCount(
             @Param("eventIds") Set<Long> eventIds,
             @Param("status") Status requestStatus);

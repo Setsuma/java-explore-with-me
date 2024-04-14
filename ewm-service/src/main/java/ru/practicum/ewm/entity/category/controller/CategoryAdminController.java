@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.*;
 import ru.practicum.ewm.entity.category.dto.request.AddCategoryRequestDto;
 import ru.practicum.ewm.entity.category.dto.request.UpdateCategoryRequestDto;
 import ru.practicum.ewm.entity.category.dto.response.CategoryResponseDto;
-import ru.practicum.ewm.entity.category.logging.CategoryControllerLoggerHelper;
 import ru.practicum.ewm.entity.category.service.CategoryAdminService;
 
 import javax.validation.Valid;
@@ -22,7 +21,7 @@ public class CategoryAdminController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public CategoryResponseDto addCategory(@RequestBody @Valid AddCategoryRequestDto categoryDto) {
-        CategoryControllerLoggerHelper.addCategory(log, categoryDto);
+        log.info("ADD CATEGORY REQUEST: " + categoryDto);
         return categoryAdminService.addCategory(categoryDto);
     }
 
@@ -31,7 +30,7 @@ public class CategoryAdminController {
             @PathVariable Long catId,
             @RequestBody @Valid UpdateCategoryRequestDto categoryDto
     ) {
-        CategoryControllerLoggerHelper.updateCategory(log, catId, categoryDto);
+        log.info("UPDATE CATEGORY REQUEST: catId = {}, " + categoryDto, catId);
         return categoryAdminService.updateCategoryById(catId, categoryDto);
     }
 
@@ -40,7 +39,7 @@ public class CategoryAdminController {
     public void deleteCategoryById(
             @PathVariable Long catId
     ) {
-        CategoryControllerLoggerHelper.deleteCategory(log, catId);
+        log.info("DELETE CATEGORY REQUEST: catId = {}", catId);
         categoryAdminService.deleteCategoryById(catId);
     }
 }

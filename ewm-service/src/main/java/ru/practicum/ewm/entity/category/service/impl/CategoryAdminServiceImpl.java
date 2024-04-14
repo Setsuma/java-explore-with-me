@@ -8,7 +8,6 @@ import ru.practicum.ewm.entity.category.dto.request.AddCategoryRequestDto;
 import ru.practicum.ewm.entity.category.dto.request.UpdateCategoryRequestDto;
 import ru.practicum.ewm.entity.category.dto.response.CategoryResponseDto;
 import ru.practicum.ewm.entity.category.entity.Category;
-import ru.practicum.ewm.entity.category.logging.CategoryServiceLoggerHelper;
 import ru.practicum.ewm.entity.category.mapper.CategoryMapper;
 import ru.practicum.ewm.entity.category.repository.CategoryJpaRepository;
 import ru.practicum.ewm.entity.category.service.CategoryAdminService;
@@ -25,7 +24,7 @@ public class CategoryAdminServiceImpl implements CategoryAdminService {
     public CategoryResponseDto addCategory(AddCategoryRequestDto categoryDto) {
         Category category = CategoryMapper.toCategory(categoryDto);
         Category savedCategory = categoryRepository.save(category);
-        CategoryServiceLoggerHelper.categorySaved(log, savedCategory);
+        log.info("CATEGORY SAVED: " + savedCategory);
         return CategoryMapper.toCategoryResponseDto(savedCategory);
     }
 
@@ -35,7 +34,7 @@ public class CategoryAdminServiceImpl implements CategoryAdminService {
         categoryRepository.checkCategoryExistsById(catId);
         Category updatedCategory = getUpdatedCategory(catId, categoryDto);
         Category savedCategory = categoryRepository.save(updatedCategory);
-        CategoryServiceLoggerHelper.categoryUpdated(log, savedCategory);
+        log.info("CATEGORY UPDATED: " + updatedCategory);
         return CategoryMapper.toCategoryResponseDto(savedCategory);
     }
 
@@ -44,7 +43,7 @@ public class CategoryAdminServiceImpl implements CategoryAdminService {
     public void deleteCategoryById(Long catId) {
         categoryRepository.checkCategoryExistsById(catId);
         categoryRepository.deleteById(catId);
-        CategoryServiceLoggerHelper.categoryDeleted(log, catId);
+        log.info("CATEGORY DELETED: catId= {}", catId);
     }
 
     private Category getUpdatedCategory(Long catId, UpdateCategoryRequestDto categoryDto) {

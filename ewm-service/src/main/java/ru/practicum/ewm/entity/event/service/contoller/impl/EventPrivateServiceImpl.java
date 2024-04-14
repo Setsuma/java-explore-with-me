@@ -14,7 +14,6 @@ import ru.practicum.ewm.entity.event.dto.response.EventFullResponseDto;
 import ru.practicum.ewm.entity.event.dto.response.EventRequestsByStatusResponseDto;
 import ru.practicum.ewm.entity.event.dto.response.EventShortResponseDto;
 import ru.practicum.ewm.entity.event.entity.Event;
-import ru.practicum.ewm.entity.event.logging.EventServiceLoggerHelper;
 import ru.practicum.ewm.entity.event.mapper.EventMapper;
 import ru.practicum.ewm.entity.event.repository.EventJpaRepository;
 import ru.practicum.ewm.entity.event.service.contoller.EventPrivateService;
@@ -27,6 +26,7 @@ import ru.practicum.ewm.entity.participation.repository.jpa.ParticipationRequest
 import ru.practicum.ewm.entity.participation.validation.validator.ParticipationValidator;
 import ru.practicum.ewm.entity.user.entity.User;
 import ru.practicum.ewm.entity.user.repository.UserJpaRepository;
+import ru.practicum.ewm.exception.ValidException;
 
 import java.util.List;
 import java.util.Optional;
@@ -49,7 +49,7 @@ public class EventPrivateServiceImpl implements EventPrivateService {
         Event event = getEvent(eventDto, userId);
         EventValidator.validateEventDateMoreThanTwoHoursAfterCurrentTime(event);
         Event savedEvent = eventRepository.save(event);
-        EventServiceLoggerHelper.eventSaved(log, savedEvent);
+        log.info("EVENT SAVED: " + savedEvent);
         return EventMapper.toEventFullResponseDto(savedEvent, null, null);
     }
 
@@ -60,7 +60,7 @@ public class EventPrivateServiceImpl implements EventPrivateService {
         eventRepository.checkEventExistsById(eventId);
         Event event = eventRepository.getReferenceById(eventId);
         EventFullResponseDto eventDto = EventMapper.toEventFullResponseDto(event, null, null);
-        EventServiceLoggerHelper.eventDtoReturned(log, eventDto);
+        log.info("EVENT FOUND: " + eventDto);
         return eventDto;
     }
 
@@ -69,7 +69,7 @@ public class EventPrivateServiceImpl implements EventPrivateService {
         userRepository.checkUserExistsById(userId);
         Page<Event> events = eventRepository.findAllByInitiatorId(userId, PageRequest.of(from, size));
         List<EventShortResponseDto> eventDtos = EventMapper.toShortResponseDto(events, null, null);
-        EventServiceLoggerHelper.eventDtoPageByUserReturned(log, userId, from, size, eventDtos);
+        log.info("USERS EVENTS FOUND: " + eventDtos);
         return eventDtos;
     }
 
@@ -85,7 +85,7 @@ public class EventPrivateServiceImpl implements EventPrivateService {
                 eventId,
                 PageRequest.of(from, size));
         List<ParticipationResponseDto> requestDtos = ParticipationMapper.toParticipationResponseDto(requests);
-        EventServiceLoggerHelper.requestDtoPageByEventReturned(log, userId, eventId, requestDtos, from, size);
+        log.info("PARTICIPATION REQUESTS FOUND: " + requestDtos);
         return requestDtos;
     }
 
@@ -99,7 +99,7 @@ public class EventPrivateServiceImpl implements EventPrivateService {
         EventValidator.validateEventDateMoreThanTwoHoursAfterCurrentTime(updatedEvent);
         performActionIfExists(updatedEvent, eventDto.getStateAction());
         Event savedEvent = eventRepository.save(updatedEvent);
-        EventServiceLoggerHelper.eventUpdatedByUser(log, savedEvent);
+        log.info("EVENT UPDATED: " + savedEvent);
         return EventMapper.toEventFullResponseDto(savedEvent, null, null);
     }
 
@@ -114,7 +114,7 @@ public class EventPrivateServiceImpl implements EventPrivateService {
         eventRepository.checkEventExistsById(eventId);
         List<Participation> requests = considerRequests(eventId, requestStatusDto);
         requestRepository.saveAll(requests);
-        EventServiceLoggerHelper.requestsUpdated(log, requestStatusDto);
+        log.info("PARTICIPATION REQUESTS STATUS UPDATED: " + requests);
         return EventMapper.toEventRequestStatusUpdateResponseDto(requests);
     }
 
@@ -132,7 +132,7 @@ public class EventPrivateServiceImpl implements EventPrivateService {
                 break;
             default:
                 String message = String.format("action %s not implemented", stateAction);
-                throw new RuntimeException(message);
+                throw new ValidException(message);
         }
     }
 

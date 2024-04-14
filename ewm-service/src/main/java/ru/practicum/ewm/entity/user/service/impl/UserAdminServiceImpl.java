@@ -8,7 +8,6 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.ewm.entity.user.dto.request.AddUserRequestDto;
 import ru.practicum.ewm.entity.user.dto.response.UserResponseDto;
 import ru.practicum.ewm.entity.user.entity.User;
-import ru.practicum.ewm.entity.user.logging.UserServiceLoggerHelper;
 import ru.practicum.ewm.entity.user.mapper.UserMapper;
 import ru.practicum.ewm.entity.user.repository.UserJpaRepository;
 import ru.practicum.ewm.entity.user.service.UserAdminService;
@@ -28,7 +27,7 @@ public class UserAdminServiceImpl implements UserAdminService {
     public UserResponseDto addUser(AddUserRequestDto userDto) {
         User user = UserMapper.toUser(userDto);
         User savedUser = userRepository.save(user);
-        UserServiceLoggerHelper.userSaved(log, savedUser);
+        log.info("USER SAVED: " + savedUser);
         return UserMapper.toUserResponseDto(savedUser);
     }
 
@@ -41,7 +40,7 @@ public class UserAdminServiceImpl implements UserAdminService {
             users = userRepository.findAll(PageRequest.of(from, size));
         }
         List<UserResponseDto> userDtos = UserMapper.toUserResponseDto(users);
-        UserServiceLoggerHelper.userDtoPageReturned(log, from, size, userDtos);
+        log.info("USERS FOUND: " + userDtos);
         return userDtos;
     }
 
@@ -50,6 +49,6 @@ public class UserAdminServiceImpl implements UserAdminService {
     public void deleteUserById(Long userId) {
         userRepository.checkUserExistsById(userId);
         userRepository.deleteById(userId);
-        UserServiceLoggerHelper.userDeleted(log, userId);
+        log.info("USER DELETED: id = {}", userId);
     }
 }

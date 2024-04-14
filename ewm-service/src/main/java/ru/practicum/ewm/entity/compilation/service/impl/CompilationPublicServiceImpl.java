@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.ewm.entity.compilation.dto.response.CompilationResponseDto;
 import ru.practicum.ewm.entity.compilation.entity.Compilation;
-import ru.practicum.ewm.entity.compilation.logging.CompilationServiceLoggerHelper;
 import ru.practicum.ewm.entity.compilation.mapper.CompilationMapper;
 import ru.practicum.ewm.entity.compilation.repository.CompilationJpaRepository;
 import ru.practicum.ewm.entity.compilation.service.CompilationPublicService;
@@ -26,7 +25,7 @@ public class CompilationPublicServiceImpl implements CompilationPublicService {
         compilationRepository.checkCompilationExistsById(compId);
         Compilation compilation = compilationRepository.getReferenceById(compId);
         var compilationDto = CompilationMapper.toCompilationResponseDto(compilation, null, null);
-        CompilationServiceLoggerHelper.compilationDtoReturned(log, compilationDto);
+        log.info("COMPILATION FOUND: " + compilationDto);
         return compilationDto;
     }
 
@@ -40,7 +39,7 @@ public class CompilationPublicServiceImpl implements CompilationPublicService {
             compilations = compilationRepository.findAll(pageable);
         }
         var compilationDtos = CompilationMapper.toCompilationResponseDto(compilations, null, null);
-        CompilationServiceLoggerHelper.compilationDtoPageReturned(log, from, size, compilationDtos);
+        log.info("COMPILATIONS FOUND BY PINNED: " + compilationDtos);
         return compilationDtos;
     }
 }

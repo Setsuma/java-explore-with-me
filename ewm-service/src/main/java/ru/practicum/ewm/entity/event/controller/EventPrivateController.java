@@ -10,7 +10,6 @@ import ru.practicum.ewm.entity.event.dto.request.UpdateEventUserRequestDto;
 import ru.practicum.ewm.entity.event.dto.response.EventFullResponseDto;
 import ru.practicum.ewm.entity.event.dto.response.EventRequestsByStatusResponseDto;
 import ru.practicum.ewm.entity.event.dto.response.EventShortResponseDto;
-import ru.practicum.ewm.entity.event.logging.EventControllerLoggerHelper;
 import ru.practicum.ewm.entity.event.service.contoller.EventPrivateService;
 import ru.practicum.ewm.entity.participation.dto.request.UpdateEventParticipationStatusRequestDto;
 import ru.practicum.ewm.entity.participation.dto.response.ParticipationResponseDto;
@@ -33,7 +32,7 @@ public class EventPrivateController {
             @PathVariable Long userId,
             @RequestBody @Valid AddEventRequestDto eventDto
     ) {
-        EventControllerLoggerHelper.addEvent(log, eventDto);
+        log.info("ADD EVENT REQUEST: userId= {}, " + eventDto, userId);
         return privateEventService.addEvent(userId, eventDto);
     }
 
@@ -42,7 +41,7 @@ public class EventPrivateController {
             @PathVariable Long userId,
             @PathVariable Long eventId
     ) {
-        EventControllerLoggerHelper.getEventById(log, userId, eventId);
+        log.info("GET EVENT BY ID REQUEST: userId= {}, eventId = {}", userId, eventId);
         return privateEventService.getEventById(userId, eventId);
     }
 
@@ -52,7 +51,7 @@ public class EventPrivateController {
             @RequestParam(defaultValue = "0") @PositiveOrZero Integer from,
             @RequestParam(defaultValue = "10") @Positive Integer size
     ) {
-        EventControllerLoggerHelper.getUserEventDtoPage(log, userId, from, size);
+        log.info("GET USER EVENTS REQUEST: userId = {}, from = {}, size = {}", userId, from, size);
         return privateEventService.getUserEvents(userId, from, size);
     }
 
@@ -63,7 +62,8 @@ public class EventPrivateController {
             @RequestParam(defaultValue = "0") @PositiveOrZero Integer from,
             @RequestParam(defaultValue = "10") @Positive Integer size
     ) {
-        EventControllerLoggerHelper.getEventParticipationRequests(log, userId, eventId, from, size);
+        log.info("GET EVENT PARTICIPATION REQUESTS: userId = {}, eventId = {}, from = {}, size = {}",
+                userId, eventId, from, size);
         return privateEventService.getEventParticipationRequests(userId, eventId, from, size);
     }
 
@@ -73,7 +73,7 @@ public class EventPrivateController {
             @PathVariable Long eventId,
             @RequestBody @Valid UpdateEventUserRequestDto eventDto
     ) {
-        EventControllerLoggerHelper.userUpdateEventById(log, userId, eventId, eventDto);
+        log.info("UPDATE USER EVENT: userId = {}, eventId = {}, " + eventDto, userId, eventId);
         return privateEventService.updateEventById(userId, eventId, eventDto);
     }
 
@@ -83,7 +83,8 @@ public class EventPrivateController {
             @PathVariable Long eventId,
             @RequestBody @Valid UpdateEventParticipationStatusRequestDto requestStatusDto
     ) {
-        EventControllerLoggerHelper.updateEventRequestStatus(log, userId, eventId, requestStatusDto);
+        log.info("UPDATE EVENT PARTICIPATION REQUEST STATUS: userID = {}, eventId = {}, " + requestStatusDto,
+                userId, eventId);
         return privateEventService.updateEventParticipationRequestStatus(userId, eventId, requestStatusDto);
     }
 }

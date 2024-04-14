@@ -11,7 +11,6 @@ import ru.practicum.ewm.entity.event.dto.response.EventFullResponseDto;
 import ru.practicum.ewm.entity.event.dto.response.EventShortResponseDto;
 import ru.practicum.ewm.entity.event.entity.Event;
 import ru.practicum.ewm.entity.event.exception.EventNotFoundException;
-import ru.practicum.ewm.entity.event.logging.EventServiceLoggerHelper;
 import ru.practicum.ewm.entity.event.mapper.EventMapper;
 import ru.practicum.ewm.entity.event.repository.EventJpaRepository;
 import ru.practicum.ewm.entity.event.service.contoller.EventPublicService;
@@ -44,7 +43,7 @@ public class EventPublicServiceImpl implements EventPublicService {
         }
         eventStatisticsService.addEventView(request, LocalDateTime.now());
         EventFullResponseDto eventDto = getEventFullResponseDto(event, request);
-        EventServiceLoggerHelper.eventDtoReturned(log, eventDto);
+        log.info("EVENT FOUND: " + eventDto);
         return eventDto;
     }
 
@@ -62,11 +61,10 @@ public class EventPublicServiceImpl implements EventPublicService {
             HttpServletRequest request
     ) {
         LocalDateTime start = rangeStart;
-        LocalDateTime end = rangeEnd;
 
         if (rangeStart == null && rangeEnd == null) start = LocalDateTime.now();
-        if (rangeStart != null && rangeEnd != null) {
-            if (rangeEnd.isBefore(rangeStart)) throw new ValidException("ошибка дат");
+        if (rangeStart != null && rangeEnd != null && (rangeEnd.isBefore(rangeStart))) {
+            throw new ValidException("date exception. end cant be before start");
         }
 
         Pageable pageable = PageRequest.of(from, size);
@@ -75,7 +73,7 @@ public class EventPublicServiceImpl implements EventPublicService {
                 categories,
                 paid,
                 start,
-                end,
+                rangeEnd,
                 Event.State.PUBLISHED,
                 pageable);
 
@@ -94,7 +92,7 @@ public class EventPublicServiceImpl implements EventPublicService {
             eventDtos = sortEvents(sort, eventDtos);
         }
 
-        EventServiceLoggerHelper.eventDtoPageByUserParametersReturned(log, eventDtos, from, size, sort);
+        log.info("EVENTS FOUND: " + eventDtos);
         return eventDtos;
     }
 
@@ -115,7 +113,7 @@ public class EventPublicServiceImpl implements EventPublicService {
                         .collect(Collectors.toList());
                 break;
             default:
-                throw new RuntimeException(String.format("sorting %s not implemented", sort));
+                throw new ValidException(String.format("sorting %s not implemented", sort));
         }
         return sortedEventDtos;
     }

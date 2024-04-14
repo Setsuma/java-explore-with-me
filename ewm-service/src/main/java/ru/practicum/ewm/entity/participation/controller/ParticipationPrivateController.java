@@ -5,7 +5,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.ewm.entity.participation.dto.response.ParticipationResponseDto;
-import ru.practicum.ewm.entity.participation.logging.ParticipationControllerLoggerHelper;
 import ru.practicum.ewm.entity.participation.service.ParticipationPrivateService;
 
 @RestController
@@ -21,7 +20,7 @@ public class ParticipationPrivateController {
             @PathVariable Long userId,
             @RequestParam Long eventId
     ) {
-        ParticipationControllerLoggerHelper.addRequest(log, userId, eventId);
+        log.info("ADD PARTICIPATION REQUEST: userId = {}, eventId = {}", userId, eventId);
         return participationRequestService.addRequest(userId, eventId);
     }
 
@@ -29,7 +28,7 @@ public class ParticipationPrivateController {
     public Iterable<ParticipationResponseDto> getUserParticipationRequests(
             @PathVariable Long userId
     ) {
-        ParticipationControllerLoggerHelper.getUserParticipationRequestDtos(log, userId);
+        log.info("GET USER PARTICIPATION REQUESTS: userId = {}", userId);
         return participationRequestService.getRequestsByRequesterId(userId);
     }
 
@@ -38,7 +37,7 @@ public class ParticipationPrivateController {
             @PathVariable Long userId,
             @PathVariable Long requestId
     ) {
-        ParticipationControllerLoggerHelper.cancelRequest(log, userId, requestId);
+        log.info("CANCEL USER PARTICIPATION REQUEST: userid = {}, requestId = {}", userId, requestId);
         return participationRequestService.cancelRequestById(userId, requestId);
     }
 }

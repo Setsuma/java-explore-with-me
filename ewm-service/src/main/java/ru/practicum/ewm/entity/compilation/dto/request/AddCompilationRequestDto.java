@@ -1,16 +1,14 @@
 package ru.practicum.ewm.entity.compilation.dto.request;
 
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.util.Collections;
 import java.util.Set;
 
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 public class AddCompilationRequestDto {
     private Set<Long> events = Collections.emptySet();

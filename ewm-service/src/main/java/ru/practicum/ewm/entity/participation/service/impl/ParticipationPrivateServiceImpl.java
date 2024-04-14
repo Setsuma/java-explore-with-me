@@ -8,7 +8,6 @@ import ru.practicum.ewm.entity.event.entity.Event;
 import ru.practicum.ewm.entity.event.repository.EventJpaRepository;
 import ru.practicum.ewm.entity.participation.dto.response.ParticipationResponseDto;
 import ru.practicum.ewm.entity.participation.entity.Participation;
-import ru.practicum.ewm.entity.participation.logging.ParticipationServiceLoggingHelper;
 import ru.practicum.ewm.entity.participation.mapper.ParticipationMapper;
 import ru.practicum.ewm.entity.participation.repository.jpa.ParticipationRequestJpaRepository;
 import ru.practicum.ewm.entity.participation.service.ParticipationPrivateService;
@@ -36,7 +35,7 @@ public class ParticipationPrivateServiceImpl implements ParticipationPrivateServ
         checkRequest(requesterId, eventId);
         Participation request = getParticipationRequest(requesterId, eventId);
         Participation savedRequest = requestRepository.save(request);
-        ParticipationServiceLoggingHelper.participationSaved(log, savedRequest);
+        log.info("PARTICIPATION REQUEST SAVED: " + savedRequest);
         return ParticipationMapper.toParticipationResponseDto(savedRequest);
     }
 
@@ -45,7 +44,7 @@ public class ParticipationPrivateServiceImpl implements ParticipationPrivateServ
         userRepository.checkUserExistsById(userId);
         List<Participation> userRequests = requestRepository.findAllByRequesterId(userId);
         var userRequestDtos = ParticipationMapper.toParticipationResponseDto(userRequests);
-        ParticipationServiceLoggingHelper.participationDtoPageByRequesterIdReturned(log, userId, userRequestDtos);
+        log.info("PARTICIPATION REQUESTS FOUND: " + userRequestDtos);
         return userRequestDtos;
     }
 
@@ -56,7 +55,7 @@ public class ParticipationPrivateServiceImpl implements ParticipationPrivateServ
         requestRepository.checkParticipationExistsById(requestId);
         Participation canceledRequest = cancelRequest(requestId);
         Participation savedRequest = requestRepository.save(canceledRequest);
-        ParticipationServiceLoggingHelper.participationCanceled(log, savedRequest);
+        log.info("PARTICIPATION REQUEST CANCELED: " + savedRequest);
         return ParticipationMapper.toParticipationResponseDto(savedRequest);
     }
 

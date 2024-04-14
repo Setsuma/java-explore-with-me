@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.*;
 import ru.practicum.ewm.entity.event.dto.request.UpdateEventAdminRequestDto;
 import ru.practicum.ewm.entity.event.dto.response.EventFullResponseDto;
 import ru.practicum.ewm.entity.event.entity.Event;
-import ru.practicum.ewm.entity.event.logging.EventControllerLoggerHelper;
 import ru.practicum.ewm.entity.event.service.contoller.EventAdminService;
 
 import javax.validation.Valid;
@@ -34,8 +33,9 @@ public class EventAdminController {
             @RequestParam(defaultValue = "0") @PositiveOrZero Integer from,
             @RequestParam(defaultValue = "10") @Positive Integer size
     ) {
-        EventControllerLoggerHelper.getEventDtoPageByParameters(
-                log, from, size, users, states, categories, rangeStart, rangeEnd);
+        log.info("GET EVENTS BY PARAMETERS ADMIN REQUEST: " + users + ", " + states + ", " + categories + ", "
+                        + "start = {}, end = {}, from = {}, size = {}",
+                rangeStart, rangeEnd, from, size);
         return adminEventService.searchAdminEventsByParameters(
                 users, states, categories, rangeStart, rangeEnd, from, size);
     }
@@ -45,7 +45,7 @@ public class EventAdminController {
             @PathVariable Long eventId,
             @RequestBody @Valid UpdateEventAdminRequestDto adminRequest
     ) {
-        EventControllerLoggerHelper.adminUpdateEventById(log, eventId, adminRequest);
+        log.info("UPDATE EVENT REQUEST: eventId = {}, " + adminRequest, eventId);
         return adminEventService.updateAdminEventById(eventId, adminRequest);
     }
 }

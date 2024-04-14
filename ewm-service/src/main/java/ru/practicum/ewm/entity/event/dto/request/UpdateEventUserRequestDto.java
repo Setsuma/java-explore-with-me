@@ -1,16 +1,14 @@
 package ru.practicum.ewm.entity.event.dto.request;
 
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import ru.practicum.ewm.entity.event.entity.Event;
 
 import javax.validation.constraints.PositiveOrZero;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 public class UpdateEventUserRequestDto {
     @Size(min = 20, max = 2_000)
@@ -32,8 +30,7 @@ public class UpdateEventUserRequestDto {
     @Size(min = 3, max = 120)
     private String title;
 
-    @Getter
-    @Setter
+    @Data
     @NoArgsConstructor
     public static class Location {
         private Float lat;

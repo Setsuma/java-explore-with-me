@@ -1,15 +1,13 @@
 package ru.practicum.ewm.entity.category.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import static com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 @JsonInclude(Include.NON_NULL)
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 public class CategoryResponseDto {
     private Long id;
