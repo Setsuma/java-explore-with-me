@@ -1,5 +1,8 @@
 package ru.practicum.ewm.entity.event.service.contoller;
 
+import ru.practicum.ewm.entity.event.comment.dto.AddCommentRequestDto;
+import ru.practicum.ewm.entity.event.comment.dto.CommentResponseDto;
+import ru.practicum.ewm.entity.event.comment.dto.UpdateCommentRequestDto;
 import ru.practicum.ewm.entity.event.dto.request.AddEventRequestDto;
 import ru.practicum.ewm.entity.event.dto.request.UpdateEventUserRequestDto;
 import ru.practicum.ewm.entity.event.dto.response.EventFullResponseDto;
@@ -10,6 +13,8 @@ import ru.practicum.ewm.entity.participation.dto.response.ParticipationResponseD
 
 public interface EventPrivateService {
     EventFullResponseDto addEvent(Long userId, AddEventRequestDto eventDto);
+
+    CommentResponseDto addComment(Long userId, Long eventId, AddCommentRequestDto commentDto);
 
     EventFullResponseDto getEventById(Long userId, Long eventId);
 
@@ -30,4 +35,8 @@ public interface EventPrivateService {
             Long userId,
             Long eventId,
             UpdateEventParticipationStatusRequestDto requestStatusDto);
+
+    CommentResponseDto updateCommentById(Long userId, Long eventId, Long comId, UpdateCommentRequestDto commentDto);
+
+    void deleteCommentById(Long userId, Long eventId, Long comId);
 }

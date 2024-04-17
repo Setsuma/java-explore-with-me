@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import ru.practicum.ewm.entity.event.comment.dto.CommentResponseDto;
 import ru.practicum.ewm.entity.event.dto.response.EventFullResponseDto;
 import ru.practicum.ewm.entity.event.dto.response.EventShortResponseDto;
 import ru.practicum.ewm.entity.event.entity.Event;
@@ -32,6 +33,15 @@ public class EventPublicController {
         return eventPublicService.getEventById(id, request);
     }
 
+    @GetMapping("/{id}/comments/{comId}")
+    public CommentResponseDto getCommentById(
+            @PathVariable Long id,
+            @PathVariable Long comId
+    ) {
+        log.info("GET EVENT COMMENT BY ID: id = {}, comId = {}", id, comId);
+        return eventPublicService.getCommentById(id, comId);
+    }
+
     @GetMapping
     public Iterable<EventShortResponseDto> getEventsByParameters(
             @RequestParam(required = false) String text,
@@ -50,5 +60,15 @@ public class EventPublicController {
                 text, paid, rangeStart, rangeEnd, onlyAvailable, sort, from, size);
         return eventPublicService.searchEventsByParameters(
                 text, categories, paid, rangeStart, rangeEnd, onlyAvailable, sort, from, size, request);
+    }
+
+    @GetMapping("/{id}/comments")
+    public Iterable<CommentResponseDto> getEventComments(
+            @PathVariable Long id,
+            @RequestParam(defaultValue = "0") @PositiveOrZero Integer from,
+            @RequestParam(defaultValue = "10") @Positive Integer size
+    ) {
+        log.info("GET EVENT COMMENTS: id = {}, from = {}, size = {}", id, from, size);
+        return eventPublicService.getComments(id, from, size);
     }
 }

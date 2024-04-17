@@ -7,6 +7,10 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.practicum.ewm.entity.event.comment.dto.CommentResponseDto;
+import ru.practicum.ewm.entity.event.comment.entity.Comment;
+import ru.practicum.ewm.entity.event.comment.mapper.CommentMapper;
+import ru.practicum.ewm.entity.event.comment.repository.CommentJpaRepository;
 import ru.practicum.ewm.entity.event.dto.response.EventFullResponseDto;
 import ru.practicum.ewm.entity.event.dto.response.EventShortResponseDto;
 import ru.practicum.ewm.entity.event.entity.Event;
@@ -33,6 +37,7 @@ public class EventPublicServiceImpl implements EventPublicService {
     private final EventStatisticsService eventStatisticsService;
     private final EventJpaRepository eventRepository;
     private final ParticipationRequestJpaRepository requestRepository;
+    private final CommentJpaRepository commentRepository;
 
     @Override
     public EventFullResponseDto getEventById(Long id, HttpServletRequest request) {
@@ -45,6 +50,16 @@ public class EventPublicServiceImpl implements EventPublicService {
         EventFullResponseDto eventDto = getEventFullResponseDto(event, request);
         log.info("EVENT FOUND: " + eventDto);
         return eventDto;
+    }
+
+    @Override
+    public CommentResponseDto getCommentById(Long id, Long comId) {
+        eventRepository.checkEventExistsById(id);
+        commentRepository.checkCommentExistsById(comId);
+        Comment comment = commentRepository.getReferenceById(comId);
+        CommentResponseDto commentDto = CommentMapper.toCommentResponseDto(comment);
+        log.info("COMMENT FOUND: " + commentDto);
+        return commentDto;
     }
 
     @Override
@@ -94,6 +109,15 @@ public class EventPublicServiceImpl implements EventPublicService {
 
         log.info("EVENTS FOUND: " + eventDtos);
         return eventDtos;
+    }
+
+    @Override
+    public Iterable<CommentResponseDto> getComments(Long id, Integer from, Integer size) {
+        eventRepository.checkEventExistsById(id);
+        List<Comment> comments = commentRepository.findAllByEventId(id, PageRequest.of(from, size));
+        List<CommentResponseDto> commentDtos = CommentMapper.toCommentResponseDto(comments);
+        log.info("COMMENTS FOUND: " + commentDtos);
+        return commentDtos;
     }
 
     private static List<EventShortResponseDto> sortEvents(
